@@ -8,7 +8,7 @@ typedef struct {
 	float turns; // number of completed turns
 	float prev_turns;
 
-	float shaft_rot_velocity; //speed of the shaft after the reductor
+	float shaft_rot_velocity; //speed of the shaft after the reductor in rpm
 	float motor_rot_velocity;
 
 	TIM_HandleTypeDef *htim; //the timer to which the encoder is connected
@@ -37,3 +37,6 @@ void update_position(Encoder *enc);
 
 //update_speed function needs to be called every millisecond for the math to work out, can be written in SysClicks
 void update_speed(Encoder *enc);
+
+
+//THE ENCODER SHOULD BE WITH ENCODER MODE ONLY T1
