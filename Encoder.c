@@ -7,12 +7,12 @@
 
 #include "Encoder.h"
 
-void encoder_init(Encoder *enc, int16_t clicks, int16_t gear_ratio, int16_t prescaler, int16_t update_frequency, TIM_HandleTypeDef *htim) {
+void encoder_init(Encoder *enc, int16_t clicks, int16_t gear_ratio, int16_t prescaler, int16_t update_period, TIM_HandleTypeDef *htim) {
     enc->Encoder_Clicks = clicks;
     enc->Gear_Ratio = gear_ratio;
     enc->prescaler = prescaler;
     enc->htim = htim;
-    enc->update_frequency = update_frequency;
+    enc->update_period = update_period;
 }
 
 void update_position(Encoder *enc){
@@ -23,7 +23,7 @@ void update_position(Encoder *enc){
   enc->count = (int16_t)enc->counter;
   //makes the number go negative in case of other direction
 	
-  enc->clicks = enc->count/4;
+  enc->clicks = enc->count/2;
   //filtering the total for total of clicks
   
 	enc->angle_motor = 360*enc->clicks/(enc->Encoder_Clicks/enc->prescaler);
@@ -48,9 +48,9 @@ void update_position(Encoder *enc){
 void update_speed(Encoder *enc){
 	enc->x++;
   //we add to this variable every millisecond
-	if(enc->x>enc->update_frequency){
+	if(enc->x>enc->update_period){
 		if(enc->turns == enc->prev_turns){
-			enc->shaft_rot_velocity = (enc->angle_shaft - enc->prev_angle_shaft)/(enc->update_frequency/1000);
+			enc->shaft_rot_velocity = (enc->angle_shaft - enc->prev_angle_shaft)/(enc->update_period/1000);
       //we calculate the velocity using previous position and current, divided by the delay that we set
 			//we have to check if the values have been reseted to not get a different speed when it completes a turn
 			enc->shaft_rot_velocity = enc->shaft_rot_velocity*60/360;
