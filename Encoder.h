@@ -21,7 +21,7 @@ typedef struct {
 	int32_t count; //value for part of the process
 	int16_t clicks; //value for part of the process
 	int32_t x; //value for part of the process
-	int16_t update_frequency; //milliseconds it takes for the program to update the speed
+	int16_t update_period; //milliseconds it takes for the program to update the speed
 } Encoder;
 
 //encoder_init should be written right after the initialization of the timers
@@ -30,7 +30,7 @@ typedef struct {
 	// prescaler: used in case of overflow
 	// update_frequency: time in milliseconds that the update of the velocity is supposed to happen at
 	// TIM_HandleTypeDef *htim: timer to which the encoder is connected
-void encoder_init(Encoder *enc, int16_t clicks, int16_t gear_ratio, int16_t prescaler, int16_t update_frequency, TIM_HandleTypeDef *htim);
+void encoder_init(Encoder *enc, int16_t clicks, int16_t gear_ratio, int16_t prescaler, int16_t update_period, TIM_HandleTypeDef *htim);
 
 //update_position should be written in the function that handles the interrupt
 void update_position(Encoder *enc);
